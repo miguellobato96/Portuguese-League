@@ -1,7 +1,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Tabela de Classificação 1ª Divisão Liga Portuguesa  #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-
+ewe
 # # # Cria dicionário correspondente à tabela # # # 
 # Abre ficheiro tabela e cria um array, com um index para cada linha
 with open('tabela_classificacao.txt') as file:
@@ -83,7 +83,7 @@ while request_credentials == True:
 # Input de equipa
 def team_input():
     team_input = input("Insira a equipa: ").lower()
-    return team_input
+    return team_input 
 
 # Se a equipa digitada existir na tabela, pede resultado
 if team_input in tab: 
