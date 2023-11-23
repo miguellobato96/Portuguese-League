@@ -1,5 +1,5 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# Tabela de Classificação 1ª Divisão Liga Portuguesa  #
+# Tabela de Classificação 1ª Divisão Liga Portuguesa  #     h
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 # # # Cria dicionário correspondente à tabela # # # 
