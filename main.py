@@ -76,14 +76,15 @@ while request_credentials == True:
     if user_input in user_data and pw_input in pw_data:
         print("OK")
         request_credentials = False
+        
+        # Se o user falhar 3 vezes gasta as suas tentativas e o seu acesso é negado
     else:
-        print(f"Tente outra vez. \n Tem {tentativas - 1} tentativas restantes.")
         tentativas -= 1
-
-# Se o user falhar 3 vezes gasta as suas tentativas e o seu acesso é negado
-        if tentativas == 0:
-             request_credentials = False
-             print("Acesso negado.")
+        if tentativas > 0:
+            print(f"Tente outra vez. \n Tem {tentativas} tentativas restantes.")
+        else:
+            request_credentials = False
+            print("Acesso negado.")
         
 # Input de equipa
 def team_input():
