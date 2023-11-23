@@ -77,7 +77,7 @@ while request_credentials == True:
         print("OK")
         request_credentials = False
         
-        # Se o user falhar 3 vezes gasta as suas tentativas e o seu acesso é negado
+# Se o user falhar 3 vezes gasta as suas tentativas e o seu acesso é negado
     else:
         tentativas -= 1
         if tentativas > 0:
