@@ -79,9 +79,9 @@ while request_credentials == True:
         goals_A = int(input(f"Digite o número de golos marcados pelo {team_A}: "))
         team_B = input("Digite o nome da outra equipa: ")
         goals_B = int(input(f"Digite o número de golos marcados pelo {team_B}: "))
-        
+
     else:
-        print(f"Tente outra vez. Tem {tentativas} tentativas.")
+        print(f"Tente outra vez. \nTem {tentativas} tentativas.")
         tentativas -= 1
 
         if tentativas == 0:
