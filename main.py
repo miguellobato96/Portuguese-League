@@ -67,24 +67,28 @@ for line in cred:
 # Numero de tentativas
 tentativas = 3
 
-# Pede os inputs ao user
+# Verifica se o nome e a password estão na base de dados, se estiverem garante acesso, se não pede ao user para tentar de novo.
 request_credentials = True
 while request_credentials == True:
     user_input, pw_input = input("Username: "), input("Password: ")
 
-# Verifica se o nome e a password estão na base de dados, se estiverem garante acesso, se pede ao user para tentar de
     if user_input in user_data and pw_input in pw_data:
-        print("OK")
         request_credentials = False
+
+        team_A = input("Digite o nome de uma equipa: ")
+        goals_A = int(input(f"Digite o número de golos marcados pelo {team_A}: "))
+        team_B = input("Digite o nome da outra equipa: ")
+        goals_B = int(input(f"Digite o número de golos marcados pelo {team_B}: "))
         
-# Se o user falhar 3 vezes gasta as suas tentativas e o seu acesso é negado
     else:
+        print(f"Tente outra vez. Tem {tentativas} tentativas.")
         tentativas -= 1
-        if tentativas > 0:
-            print(f"Tente outra vez. \n Tem {tentativas} tentativas restantes.")
-        else:
-            request_credentials = False
-            print("Acesso negado.")
+
+        if tentativas == 0:
+             request_credentials = False
+             print("Acesso negado.")
+# Se o user falhar 3 vezes gasta as suas tentativas e o seu acesso é negado
+
         
 # Input de equipa
 def team_input():
