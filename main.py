@@ -1,7 +1,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # Tabela de Classificação 1ª Divisão Liga Portuguesa  #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-ewe
+
 # # # Cria dicionário correspondente à tabela # # # 
 # Abre ficheiro tabela e cria um array, com um index para cada linha
 with open('tabela_classificacao.txt') as file:
