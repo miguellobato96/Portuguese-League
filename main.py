@@ -57,18 +57,22 @@ def tab_update():
 with open('credenciais.txt') as file:
         cred = file.readlines()
 
-#Cria um array para os users e outro array para as passwords
+# Cria um array para os users e outro array para as passwords
 user_data, pw_data = [], []    
 for line in cred:
     u, p = line.split(",")    
     user_data.append(u)
     pw_data.append(p)
 
+# Numero de tentativas
 tentativas = 3
+
+# Pede os inputs ao user
 request_credentials = True
 while request_credentials == True:
     user_input, pw_input = input("Username: "), input("Password: ")
 
+# Verifica se o nome e a password estão na base de dados, se estiverem garante acesso, se pede ao user para tentar de
     if user_input in user_data and pw_input in pw_data:
         print("OK")
         request_credentials = False
@@ -76,6 +80,7 @@ while request_credentials == True:
         print("Tente outra vez.")
         tentativas -= 1
 
+# Se o user falhar 3 vezes gasta as suas tentativas e o seu acesso é negado
         if tentativas == 0:
              request_credentials = False
              print("Acesso negado.")
