@@ -23,7 +23,7 @@ for line in tab_data[1:]:
         equipa = data[0]
         # Guarda a restante informação
         # ... Não se usou .strip() anteriomente porque aqui, como estamos a "transformar" tudo em int, o IDE ignora o "\n"
-        jogos, vitorias, derrotas, empates, pontos = int(data[1]), int(data[2]), int(data[3]), int(data[4]), int(data[5])
+        jogos, vitorias, derrotas, empates, pontos, golos = int(data[1]), int(data[2]), int(data[3]), int(data[4]), int(data[5]), int(data[6])
 
         # Preenche o dicionário:
         # Cria uma key com o nome da equipa guardada e, como value, cria um dicionário com a restante informação
@@ -33,7 +33,8 @@ for line in tab_data[1:]:
              'vitorias': vitorias,
              'derrotas': derrotas,
              'empates': empates,
-             'pontos': pontos
+             'pontos': pontos,
+             'golos' : golos
         }
 
 # Função que reescreve tabela_classificacao.txt
@@ -46,7 +47,7 @@ def tab_update():
             
             # Escreve os dados para cada equipa
             for team, data in tab.items():
-                file.write(f"{team},{data['jogos']},{data['vitorias']},{data['derrotas']},{data['empates']},{data['pontos']}\n")
+                file.write(f"{team},{data['jogos']},{data['vitorias']},{data['derrotas']},{data['empates']},{data['pontos']},{data['golos']}\n")
 
 
 def input_key(team):
@@ -95,6 +96,10 @@ while request_credentials == True:
 
         input_key_A = input_key(team_A)
         input_key_B = input_key(team_B)
+
+        # Golos 
+        tab[input_key_A]['golos'] += goals_A
+        tab[input_key_B]['golos'] += goals_B
 
         # Vitória A & Derrota B
         if goals_A > goals_B:
