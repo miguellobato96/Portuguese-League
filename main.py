@@ -1,14 +1,19 @@
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# Tabela de Classificação 1ª Divisão Liga Portuguesa  #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                              Tabela de Classificação 1ª Divisão Liga Portuguesa                                 #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# # # Cria dicionário correspondente à tabela # # # 
+# Biblioteca para componente gráfica
+import matplotlib.pyplot as plt
+
+# # # # # # # # # # # # # # # # # # # # # #
+# Cria dicionário correspondente à tabela #
+# # # # # # # # # # # # # # # # # # # # # #
+
 # Abre ficheiro tabela e cria um array, com um index para cada linha
 with open('tabela_classificacao.txt', 'r') as file:
     tab_data = file.readlines()
 
 # Guarda os cabeçalhos, que se encontram na primeira linha
-# ... Separando pela vírugla e tirando os "espaços (\n)" e criando um array onde cada index é um cabeçalho 
 titles = tab_data[0].strip().split(",")
 
 # Cria dicionário vazio
@@ -22,19 +27,16 @@ for line in tab_data[1:]:
         # Guarda o nome da equipa
         equipa = data[0]
         # Guarda a restante informação
-        # ... Não se usou .strip() anteriomente porque aqui, como estamos a "transformar" tudo em int, o IDE ignora o "\n"
         jogos, vitorias, derrotas, empates, pontos, golos = int(data[1]), int(data[2]), int(data[3]), int(data[4]), int(data[5]), int(data[6])
 
         # Preenche o dicionário:
-        # Cria uma key com o nome da equipa guardada e, como value, cria um dicionário com a restante informação
-        # ... Onde cria novamente uma key com o valor correspondente para cada informação
         tab[equipa] = {
              'jogos': jogos,
              'vitorias': vitorias,
              'derrotas': derrotas,
              'empates': empates,
-             'pontos': pontos,
-             'golos' : golos
+             'golos' : golos,
+             'pontos': pontos
         }
 
 # Função que reescreve tabela_classificacao.txt
@@ -47,19 +49,48 @@ def tab_update():
             
             # Escreve os dados para cada equipa
             for team, data in tab.items():
-                file.write(f"{team},{data['jogos']},{data['vitorias']},{data['derrotas']},{data['empates']},{data['pontos']},{data['golos']}\n")
+                file.write(f"{team},{data['jogos']},{data['vitorias']},{data['derrotas']},{data['empates']},{data['golos']},{data['pontos']}\n")
 
-
+# Função que recebe o nome da equipa à qual o user se refere e retorna a key correspondente
 def input_key(team):
-    if team.lower() in ("slb", "benfas", "ben", "benfica", "sport lisboa e benfica"):
+    if team.lower() in ("slb", "benfas", "ben", "benfica", "sport lisboa e benfica", "slbenfica", "sl_benfica"):
         return "SL_Benfica"
-    elif team.lower() in ("scp", "sporting", "sporting clube de portugal", "spo", "sport"):
+    elif team.lower() in ("scp", "sporting", "sporting clube de portugal", "spo", "sport", "sportingcp", "sporting_cp"):
         return "Sporting_CP"
-    elif team.lower() in ("porto", "fc porto", "port", "porto futebol clube", "fcp", "futebol clube do porto"):
+    elif team.lower() in ("porto", "fc porto", "port", "porto futebol clube", "fcp", "futebol clube do porto", "fcporto", "fc_porto"):
         return "FC_Porto"
     else:
         return team
-    
+
+# Função que mostra a gráficamente a tabela
+def display_table(tab):
+   # Sort teams by points in descending order
+    sorted_teams = sorted(tab.keys(), key=lambda team: tab[team]['pontos'], reverse=True)
+
+    # Extract data for the sorted teams
+    teams = sorted_teams
+    points = [tab[team]['pontos'] for team in teams]
+    victories = [tab[team]['vitorias'] for team in teams]
+    defeats = [tab[team]['derrotas'] for team in teams]
+    draws = [tab[team]['empates'] for team in teams]
+
+    plt.figure(figsize=(10, 6))
+
+    # Plot lines for each team to resemble a table
+    for i, team in enumerate(teams):
+        plt.plot([0, 4], [i, i], color='black')  # Horizontal line
+        plt.text(0.5, i, team, ha='right', va='center')
+        plt.text(1.5, i, str(tab[team]['jogos']), ha='center', va='center')
+        plt.text(2.5, i, str(tab[team]['vitorias']), ha='center', va='center')
+        plt.text(3.5, i, str(tab[team]['derrotas']), ha='center', va='center')
+        plt.text(4.5, i, str(tab[team]['empates']), ha='center', va='center')
+        plt.text(5.5, i, str(tab[team]['pontos']), ha='center', va='center')
+
+    plt.xlim(0, 6)
+    plt.ylim(-1, len(teams))
+    plt.axis('off')  # Turn off axis for a cleaner look
+    plt.show()
+
 
 # # # # # # # # #
 # Autenticação  #
@@ -79,7 +110,7 @@ for line in cred:
 # Numero de tentativas
 tentativas = 3
 
-# Pede o nome e password
+# Pede nome e password
 request_credentials = True
 while request_credentials == True:
     user_input, pw_input = input("Username: "), input("Password: ")
@@ -94,12 +125,18 @@ while request_credentials == True:
         team_B = input("Digite o nome da outra equipa: ")
         goals_B = int(input(f"Digite o número de golos marcados pelo {team_B}: "))
 
+        # Guarda a key 
         input_key_A = input_key(team_A)
         input_key_B = input_key(team_B)
 
-        # Golos 
-        tab[input_key_A]['golos'] += goals_A
+        # Golos Marcados
         tab[input_key_B]['golos'] += goals_B
+        tab[input_key_A]['golos'] += goals_A
+
+        # Golos Sofridos
+
+        # Diferença de golos
+
 
         # Vitória A & Derrota B
         if goals_A > goals_B:
@@ -129,6 +166,8 @@ while request_credentials == True:
 
         # Update
         tab_update()
+        # Display
+        display_table(tab)
             
     # Decrementa número de tentativas 
     else:
