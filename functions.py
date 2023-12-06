@@ -148,7 +148,7 @@ def authenticate_user(credentials):
         if attempts == 0:
             print("Acesso negado.")
 
-    print("Authentication failed. No more attempts remaining.")
+    print("Autenticação falhada, não tem mais tentativas restantes.")
     return False
 
 
