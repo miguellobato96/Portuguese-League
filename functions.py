@@ -193,6 +193,7 @@ def input_key(team):
     elif team.lower() in ("fc_arouca", "arouca", "fc arouca"):
         return "FC_Arouca"
     else:
+        print("Por favor, escolha uma equipa válida")
         return False
 
 
