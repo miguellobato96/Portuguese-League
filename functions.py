@@ -4,46 +4,11 @@ import matplotlib.pyplot as plt
 # Logótipo
 def logo():
     print(
-                """
-              
-              ||||||
-             (||||||)
-              ||||||
-               )||(
-          _ _[ ____ ]_ _
-     .- "                " -.
-   .`                        `.
-  |                            |
-  |   _____________  _________ |   
-  |  /_  __/  _/ _ |/ ___/ __ \|   
-  |   / / _/ // __ / (_ / /_/ /|   
-  |  /_/ /___/_/ |_\___/\____/ |   
-  |                            |
-  |                            |
-  |____   ___ ___ ___ ___  ____|
-  .` ; | | _ | __|_ _/ __|| : `.
-  :  ; | |   | _| | |\__ \| :  ;
-  :  ; | |_|_|___|___|___/| :  ;              
-  :  ; |                  | :  ;             
-  :  ; |                  | :  ;
-  :  ; |                  | :  ;
-  :  ; ) ~ ~ ~ ~ ~ ~ ~ ~ ~( :  ;
-  /// /                    \ ///
-     /                      |
-     |                       >
-     |           |\         /
-     )           |  \    /  )
-    /_ _ __ _ _ _|    \/ [//]
-         |   |           |  |
-         (   |           |  |
-          [//]           |__|__
-          |  |           |______)
-          |  |               .:::-:::.
-          |  |             .'--:   :--'.
-          |  |            ;'._ /:::\ _.';
-          |  |            :    :::::    ;
-        __|__|             :.''\:::/''.;
-       (_____|              ';..-.-..;'                                                                       
+        """
+ ___  ___   ___ ___ ___ _ __ 
+/ __|/ _ \ / __/ __/ _ \ '__|
+\__ \ (_) | (_| (_|  __/ |   
+|___/\___/ \___\___\___|_|                                                                        
         """
     )
 
@@ -88,7 +53,7 @@ def read_table():
 titles, tab = read_table()
 
 
-# Função que reescreve tabela_classificacao.txt
+# Reescreve tabela_classificacao.txt (para ser chamada após introdução de resultados (alteração dos valores))
 def tab_update():
     with open('tabela_classificacao.txt', 'w') as file:
         # Escreve cabeçalhos
@@ -101,7 +66,7 @@ def tab_update():
                 f"{data['Pts']}\n")
 
 
-# Função que mostra a gráficamente a tabela
+# Mostra gráficamente a tabela
 def display_table(tab):
     # Ordena as equipas com base nos pontos e diferença de golos (DG)
     sorted_teams = sorted(tab.items(), key=lambda x: (x[1]['Pts'], x[1]['DG']), reverse=True)
@@ -137,7 +102,7 @@ def display_table(tab):
     plt.show()
 
 
-# Função que "zera" a tabela
+# 'zera' a tabela
 def reset_table_file():
     with open('tabela_classificacao.txt', 'w') as file:
         file.write("Clube,J,V,D,E,GM,GS,DG,Pts\n")
@@ -153,7 +118,7 @@ def reset_table_file():
             file.write(f"{team}, 0, 0, 0, 0, 0, 0, 0, 0\n")
 
 
-# Funcção que lê credenciais.txt e cria dicionário
+# Lê credenciais.txt e cria dicionário
 def read_credentials():
     credentials = {}
 
@@ -165,6 +130,7 @@ def read_credentials():
     return credentials
 
 
+# Pede dados de atenticação ao utilizador e compara com a base de dados
 def authenticate_user(credentials):
     attempts = 3
 
@@ -173,21 +139,20 @@ def authenticate_user(credentials):
 
         if user_input in credentials and credentials[user_input] == pw_input:
             return True
-            
+        
         # Decrementa número de tentativas
         attempts -= 1
-        # Pede ‘login’ novamente, mostra número de tentativas restantes
+        # Pede 'login' novamente, mostra número de tentativas restantes
         print(f"Tente outra vez. Tem {attempts} tentativas.")
+        
 
-        # Quando as tentativas se esgotarem, nega acesso
-        if attempts == 0:
-            print("Acesso negado.")
+    # Quando as tentativas se esgotarem, nega acesso
+    print("Acesso negado.")
 
-    print("Autenticação falhada, não tem mais tentativas restantes.")
     return False
 
 
-# Função que recebe o nome da equipa à qual o ‘user’ se refere e retorna a key correspondente
+# Recebe o nome da equipa à qual o 'user' se refere e retorna a key correspondente
 def input_key(team):
     if team.lower() in ("slb", "benfas", "ben", "benfica", "sport lisboa e benfica", "slbenfica", "sl_benfica"):
         return "SL_Benfica"
@@ -228,10 +193,11 @@ def input_key(team):
     elif team.lower() in ("fc_arouca", "arouca", "fc arouca"):
         return "FC_Arouca"
     else:
-        print("Por favor, escolha uma equipa válida")
+        print("Esse nome não está registado em nenhum clube da liga.")
         return False
 
 
+# Recebe o nome da equipa introduzido pelo utilizador e pergunta o número de golos marcados até ser introduzido um número válido
 def get_goals_input(team_name):
     while True:
         goals_input = input(f"Digite o número de golos marcados pelo {team_name}: ")
@@ -245,6 +211,7 @@ def get_goals_input(team_name):
             print("Por favor, insira um número inteiro para os golos.")
 
 
+# Recebe a key correspondente à team do input, o seu resultado (V, D, E), e incrementa os valores necessários
 def update_team_stats(team_key, result):
     tab[team_key]['J'] += 1
     tab[team_key][result] += 1
@@ -280,4 +247,3 @@ def update_scores(input_key_A, goals_A, input_key_B, goals_B):
     else:
         update_team_stats(input_key_A, 'E')
         update_team_stats(input_key_B, 'E')
-      
