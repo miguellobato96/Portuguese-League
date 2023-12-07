@@ -176,11 +176,11 @@ def authenticate_user(credentials):
 
         if user_input in credentials and credentials[user_input] == pw_input:
             return True
-
-        # Pede ‘login’ novamente, mostra número de tentativas restantes
-        print(f"Tente outra vez. Tem {attempts} tentativas.")
+            
         # Decrementa número de tentativas
         attempts -= 1
+        # Pede ‘login’ novamente, mostra número de tentativas restantes
+        print(f"Tente outra vez. Tem {attempts} tentativas.")
 
         # Quando as tentativas se esgotarem, nega acesso
         if attempts == 0:
