@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def logo():
     print(
                 """
-              ||||||
+              
               ||||||
              (||||||)
               ||||||
