@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  # Biblioteca que nos permite desenhar gráficamente a tabela
 
 
 # Logótipo
@@ -53,7 +53,7 @@ def read_table():
 titles, tab = read_table()
 
 
-# Reescreve tabela_classificacao.txt (para ser chamada após introdução de resultados (alteração dos valores))
+# Atualiza tabela com as alterações dadas pelo utilizador
 def tab_update():
     with open('tabela_classificacao.txt', 'w') as file:
         # Escreve cabeçalhos
@@ -118,25 +118,37 @@ def reset_table_file():
             file.write(f"{team}, 0, 0, 0, 0, 0, 0, 0, 0\n")
 
 
-# Lê credenciais.txt e cria dicionário
+# Lê credenciais.txt
 def read_credentials():
+    # Cria um dicionário vazio
     credentials = {}
 
+    # Abre o arquivo 'credenciais.txt' em modo de leitura
     with open('credenciais.txt', 'r') as file:
+        # Itera através de cada linha no arquivo
         for line in file:
+            # Divide a linha username e password, usando a vírgula como delimitador
             username, password = map(str.strip, line.split(","))
+
+            # Adiciona o username e a password correspondente ao dicionário de credenciais
             credentials[username] = password
 
     return credentials
 
+'''
+Este método IMPEDE que o utilizador consiga uma autenticão com uma password
+que exista no ficheiro MAS que não corresponda ao username fornecido
+'''
 
 # Pede dados de atenticação ao utilizador e compara com a base de dados
 def authenticate_user(credentials):
     attempts = 3
 
     while attempts > 0:
+        # Solicita input do utilizador para username e password
         user_input, pw_input = input("Username: "), input("Password: ")
 
+        # Verifica se o username está nas credenciais e se a password está correta
         if user_input in credentials and credentials[user_input] == pw_input:
             return True
         
@@ -152,7 +164,7 @@ def authenticate_user(credentials):
     return False
 
 
-# Recebe o nome da equipa à qual o 'user' se refere e retorna a key correspondente
+# Recebe o nome da equipa à qual o utilizador se refere e retorna a key correspondente
 def input_key(team):
     if team.lower() in ("slb", "benfas", "ben", "benfica", "sport lisboa e benfica", "slbenfica", "sl_benfica"):
         return "SL_Benfica"
@@ -197,7 +209,7 @@ def input_key(team):
         return False
 
 
-# Recebe o nome da equipa introduzido pelo utilizador e pergunta o número de golos marcados até ser introduzido um número válido
+# Recebe o nome da equipa introduzido pelo utilizador e pergunta o número de golos marcados até ser introduzido um valor válido
 def get_goals_input(team_name):
     while True:
         goals_input = input(f"Digite o número de golos marcados pelo {team_name}: ")
@@ -211,7 +223,7 @@ def get_goals_input(team_name):
             print("Por favor, insira um número inteiro para os golos.")
 
 
-# Recebe a key correspondente à team do input, o seu resultado (V, D, E), e incrementa os valores necessários
+# Recebe a key correspondente à team do input, o seu resultado (V, D, E), e incrementa os valores para nº jogos e pontos
 def update_team_stats(team_key, result):
     tab[team_key]['J'] += 1
     tab[team_key][result] += 1
@@ -222,6 +234,7 @@ def update_team_stats(team_key, result):
         tab[team_key]['Pts'] += 1
 
 
+# Recebe os valores finais dos nomes e golos de cada equipa e atualiza a restante informação correspondente
 def update_scores(input_key_A, goals_A, input_key_B, goals_B):
     # Golos Marcados
     tab[input_key_B]['GM'] += goals_B
