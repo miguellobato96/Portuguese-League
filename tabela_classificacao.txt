@@ -1,4 +1,4 @@
-Clube,J,V,D,E,GM,GS,DG,Pts
+Team,G,W,L,D,GS,GC,GD,Pts
 SL_Benfica,0,0,0,0,0,0,0,0
 Sporting_CP,0,0,0,0,0,0,0,0
 FC_Porto,0,0,0,0,0,0,0,0
