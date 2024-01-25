@@ -246,8 +246,8 @@ def update_scores(input_key_A, goals_A, input_key_B, goals_B):
     tab[input_key_B]['GC'] += goals_A
 
     # Goal Difference
-    tab[input_key_A]['GD'] = tab[input_key_A]['GM'] - tab[input_key_A]['GS']
-    tab[input_key_B]['GD'] = tab[input_key_B]['GM'] - tab[input_key_B]['GS']
+    tab[input_key_A]['GD'] = tab[input_key_A]['GS'] - tab[input_key_A]['GC']
+    tab[input_key_B]['GD'] = tab[input_key_B]['GS'] - tab[input_key_B]['GC']
 
     # Win A & Loss B
     if goals_A > goals_B:
